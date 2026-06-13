@@ -420,16 +420,23 @@
       align-items: center;
       justify-content: center;
       min-height: 46px;
+      width: 100%;
+      border: 0;
       border-radius: 999px;
       background: #071832;
       color: #ffffff;
       text-decoration: none;
       font-size: 14px;
       font-weight: 800;
+      font-family: inherit;
+      cursor: pointer;
       transition: .24s ease;
       text-align: center;
       margin-top: 20px;
       padding: 0 18px;
+      -webkit-tap-highlight-color: transparent;
+      appearance: none;
+      -webkit-appearance: none;
     }
 
     .swd-submit:hover {
@@ -621,9 +628,9 @@
             <p class="swd-small">Hosting, Wartung, Updates & Basis-SEO inklusive.</p>
             <div class="swd-monthly-list" id="monthlyList"></div>
 
-            <a class="swd-submit" href="#" onclick="swdSendConfigurationEmail(event)">
+            <button type="button" class="swd-submit" onclick="swdSendConfigurationEmail()">
               Mit dieser Auswahl weitermachen
-            </a>
+            </button>
 
             <p class="swd-note">Noch keine Zahlung. Wir bestätigen alles, bevor wir starten.</p>
           </div>
@@ -752,8 +759,7 @@
       });
     });
 
-    function swdSendConfigurationEmail(event) {
-      event.preventDefault();
+    function swdSendConfigurationEmail() {
 
       const setupTotal = totalPrice.textContent;
       const monthlyTotal = monthlyPrice.textContent.replace(/\s+/g, " ").trim();
@@ -828,8 +834,16 @@ Vielen Dank!
 Viele Grüße`
       );
 
-      window.location.href =
+      const mailtoLink =
         "mailto:info@smart-web-designs.de?subject=" + subject + "&body=" + body;
+
+      window.location.href = mailtoLink;
+
+      setTimeout(function() {
+        if (document.hasFocus && document.hasFocus()) {
+          window.location.assign(mailtoLink);
+        }
+      }, 250);
     }
 
     updatePrice();
