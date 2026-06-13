@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,214 +10,267 @@
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 body{
-font-family:'Manrope',sans-serif;
-background:#f4f8fc;
-padding:80px 20px;
-color:#111827;
+  font-family:'Manrope',sans-serif;
+  background:#f4f8fc;
+  padding:80px 20px;
+  color:#111827;
+  overflow-x:hidden;
 }
 
 .container{
-max-width:900px;
-margin:auto;
+  max-width:900px;
+  margin:auto;
 }
 
 .header{
-text-align:center;
-margin-bottom:40px;
+  text-align:center;
+  margin-bottom:42px;
 }
 
 .header h1{
-font-size:clamp(36px,5vw,56px);
-font-weight:700;
-margin-bottom:12px;
+  font-size:clamp(34px,4vw,48px);
+  font-weight:700;
+  letter-spacing:-1.4px;
+  margin-bottom:12px;
 }
 
 .header p{
-color:#64748b;
-font-size:18px;
+  color:#465774;
+  font-size:16px;
+  font-weight:500;
 }
 
 .faq{
-display:flex;
-flex-direction:column;
-gap:18px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
 }
 
 .item{
-background:white;
-border:1px solid #dbe4ee;
-border-radius:22px;
-overflow:hidden;
-box-shadow:0 8px 25px rgba(0,0,0,.05);
-transition:.3s;
+  background:white;
+  border:1px solid #dbe4ee;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 10px 26px rgba(0,0,0,.055);
+  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+.item:hover{
+  transform:translateY(-1px);
+  box-shadow:0 14px 30px rgba(0,0,0,.075);
+  border-color:#cfd9e5;
 }
 
 .question{
-width:100%;
-background:none;
-border:none;
-padding:28px 30px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-font-size:20px;
-font-weight:600;
-cursor:pointer;
-text-align:left;
+  width:100%;
+  background:none;
+  border:none;
+  padding:22px 26px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  font-size:17px;
+  font-weight:700;
+  cursor:pointer;
+  text-align:left;
+  font-family:inherit;
+  color:#111;
 }
 
 .icon{
-font-size:24px;
-transition:.3s;
+  width:22px;
+  height:22px;
+  position:relative;
+  flex-shrink:0;
+}
+
+.icon::before,
+.icon::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:14px;
+  height:2px;
+  background:#5d6b80;
+  border-radius:99px;
+  transform:translate(-50%,-50%);
+  transition:transform .28s ease, opacity .22s ease;
+}
+
+.icon::after{
+  transform:translate(-50%,-50%) rotate(90deg);
+}
+
+.item.active .icon::after{
+  opacity:0;
+  transform:translate(-50%,-50%) rotate(0deg);
 }
 
 .answer{
-max-height:0;
-overflow:hidden;
-transition:max-height .4s ease;
-}
-
-.answer-content{
-padding:0 30px 28px;
-line-height:1.8;
-color:#64748b;
-font-size:17px;
+  max-height:0;
+  opacity:0;
+  overflow:hidden;
+  transform:translateY(-4px);
+  transition:
+    max-height .42s cubic-bezier(.4,0,.2,1),
+    opacity .26s ease,
+    transform .26s ease;
 }
 
 .item.active .answer{
-max-height:250px;
-}
-
-.item.active .icon{
-transform:rotate(180deg);
-}
-
-@media(max-width:768px){
-
-body{
-padding:60px 16px;
-}
-
-.question{
-padding:22px;
-font-size:17px;
+  opacity:1;
+  transform:translateY(0);
 }
 
 .answer-content{
-padding:0 22px 22px;
-font-size:15px;
+  padding:0 26px 24px;
+  line-height:1.75;
+  color:#465774;
+  font-size:15px;
+  font-weight:500;
 }
 
+@media(max-width:768px){
+  body{padding:60px 16px}
+  .header{margin-bottom:34px}
+  .header h1{font-size:34px;letter-spacing:-1px}
+  .header p{font-size:15px}
+  .question{padding:20px;font-size:16px}
+  .answer-content{padding:0 20px 22px;font-size:14.5px}
+  .item{border-radius:18px}
 }
 </style>
 </head>
+
 <body>
 
 <div class="container">
+  <div class="header">
+    <h1>Häufig gestellte Fragen</h1>
+    <p>Noch unsicher? Hier findest du die wichtigsten Antworten.</p>
+  </div>
 
-<div class="header">
-<h1>Frequently asked questions</h1>
-<p>Still unsure? Here are the things people ask most.</p>
-</div>
+  <div class="faq">
 
-<div class="faq">
+    <div class="item">
+      <button class="question" type="button">
+        Wie funktioniert die Preisgestaltung?
+        <span class="icon"></span>
+      </button>
+      <div class="answer">
+        <div class="answer-content">
+          Du zahlst €29/Monat für Hosting, Wartung, Updates und Basis-SEO. Dazu kommt einmalig der Einrichtungspreis, abhängig von deinen gewählten Funktionen.
+        </div>
+      </div>
+    </div>
 
-<div class="item">
-<button class="question">
-How does the pricing actually work?
-<span class="icon">⌄</span>
-</button>
-<div class="answer">
-<div class="answer-content">
-You pay a one-time setup fee depending on your selected features and a fixed €29/month for hosting, maintenance and updates.
-</div>
-</div>
-</div>
+    <div class="item">
+      <button class="question" type="button">
+        Ist die einmalige Einrichtung ein Abo?
+        <span class="icon"></span>
+      </button>
+      <div class="answer">
+        <div class="answer-content">
+          Nein. Die Einrichtung ist eine einmalige Zahlung. Du zahlst sie nur einmal, wenn wir deine Website erstellen.
+        </div>
+      </div>
+    </div>
 
-<div class="item">
-<button class="question">
-Is the one-time setup a subscription?
-<span class="icon">⌄</span>
-</button>
-<div class="answer">
-<div class="answer-content">
-No. The setup fee is paid once when we build your website.
-</div>
-</div>
-</div>
+    <div class="item">
+      <button class="question" type="button">
+        Kann ich später Funktionen hinzufügen?
+        <span class="icon"></span>
+      </button>
+      <div class="answer">
+        <div class="answer-content">
+          Ja. Du kannst später weitere Seiten, einen Blog, einen Shop oder andere Funktionen hinzufügen. Dafür fällt nur der jeweilige einmalige Zusatzpreis an.
+        </div>
+      </div>
+    </div>
 
-<div class="item">
-<button class="question">
-What if I want to add features later?
-<span class="icon">⌄</span>
-</button>
-<div class="answer">
-<div class="answer-content">
-No problem. Features can always be added later without rebuilding the website.
-</div>
-</div>
-</div>
+    <div class="item">
+      <button class="question" type="button">
+        Brauche ich technische Kenntnisse?
+        <span class="icon"></span>
+      </button>
+      <div class="answer">
+        <div class="answer-content">
+          Nein. Du wählst nur aus, was du brauchst. Design, Aufbau, Technik, Hosting und Updates übernehmen wir vollständig für dich.
+        </div>
+      </div>
+    </div>
 
-<div class="item">
-<button class="question">
-Do I need technical knowledge?
-<span class="icon">⌄</span>
-</button>
-<div class="answer">
-<div class="answer-content">
-No. We handle everything for you, from design to updates and hosting.
-</div>
-</div>
-</div>
+    <div class="item">
+      <button class="question" type="button">
+        Kann ich den monatlichen Plan kündigen?
+        <span class="icon"></span>
+      </button>
+      <div class="answer">
+        <div class="answer-content">
+          Ja, jederzeit. Wenn du kündigst, endet der betreute Service. Deine Website-Dateien bleiben selbstverständlich dir.
+        </div>
+      </div>
+    </div>
 
-<div class="item">
-<button class="question">
-Can I cancel the monthly plan?
-<span class="icon">⌄</span>
-</button>
-<div class="answer">
-<div class="answer-content">
-Yes, you can cancel anytime.
-</div>
-</div>
-</div>
+    <div class="item">
+      <button class="question" type="button">
+        Wie lange dauert die Erstellung?
+        <span class="icon"></span>
+      </button>
+      <div class="answer">
+        <div class="answer-content">
+          Die meisten One-Page-Websites sind innerhalb von 5–7 Werktagen fertig. Größere Websites oder Shops können je nach Umfang etwas länger dauern.
+        </div>
+      </div>
+    </div>
 
-<div class="item">
-<button class="question">
-How long does it take to build my website?
-<span class="icon">⌄</span>
-</button>
-<div class="answer">
-<div class="answer-content">
-Most websites are completed within 5–7 business days.
-</div>
-</div>
-</div>
-
-</div>
+  </div>
 </div>
 
 <script>
 const items = document.querySelectorAll('.item');
 
+function closeItem(item){
+  const answer = item.querySelector('.answer');
+  item.classList.remove('active');
+  answer.style.maxHeight = '0px';
+}
+
+function openItem(item){
+  const answer = item.querySelector('.answer');
+  item.classList.add('active');
+  answer.style.maxHeight = answer.scrollHeight + 'px';
+}
+
 items.forEach(item => {
-  item.querySelector('.question').addEventListener('click', () => {
+  const button = item.querySelector('.question');
+
+  button.addEventListener('click', () => {
+    const isOpen = item.classList.contains('active');
 
     items.forEach(other => {
-      if(other !== item){
-        other.classList.remove('active');
-      }
+      if(other !== item) closeItem(other);
     });
 
-    item.classList.toggle('active');
+    if(isOpen){
+      closeItem(item);
+    }else{
+      openItem(item);
+    }
+  });
+});
 
+window.addEventListener('resize', () => {
+  items.forEach(item => {
+    if(item.classList.contains('active')){
+      const answer = item.querySelector('.answer');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
   });
 });
 </script>
