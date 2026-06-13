@@ -628,9 +628,9 @@
             <p class="swd-small">Hosting, Wartung, Updates & Basis-SEO inklusive.</p>
             <div class="swd-monthly-list" id="monthlyList"></div>
 
-            <button type="button" class="swd-submit" onclick="swdSendConfigurationEmail()">
+            <a id="swdSubmitMail" class="swd-submit" href="mailto:info@smart-web-designs.de">
               Mit dieser Auswahl weitermachen
-            </button>
+            </a>
 
             <p class="swd-note">Noch keine Zahlung. Wir bestätigen alles, bevor wir starten.</p>
           </div>
@@ -656,6 +656,7 @@
     const monthlyPrice = document.getElementById("monthlyPrice");
     const summaryList = document.getElementById("summaryList");
     const monthlyList = document.getElementById("monthlyList");
+    const swdSubmitMail = document.getElementById("swdSubmitMail");
     const addons = document.querySelectorAll(".swd-addon");
 
     let selectedType = "onepage";
@@ -704,6 +705,7 @@
       monthlyPrice.innerHTML = euro(monthlyTotal) + ' <small>/Monat</small>';
       summaryList.innerHTML = setupRows;
       monthlyList.innerHTML = monthlyRows;
+      updateMailLink();
     }
 
     typeOne.addEventListener("click", () => {
@@ -759,8 +761,7 @@
       });
     });
 
-    function swdSendConfigurationEmail() {
-
+    function buildMailtoLink() {
       const setupTotal = totalPrice.textContent;
       const monthlyTotal = monthlyPrice.textContent.replace(/\s+/g, " ").trim();
       const setupRows = document.querySelectorAll("#summaryList .swd-summary-row");
@@ -785,9 +786,9 @@
         monthlyDetails = "• Keine zusätzlichen monatlichen Extras\n";
       }
 
-      const subject = encodeURIComponent("Neue Website-Anfrage über den Konfigurator");
+      const subject = "Neue Website-Anfrage über den Konfigurator";
 
-      const body = encodeURIComponent(
+      const body =
 `Hallo Smart Web Designs,
 
 ich interessiere mich für eine Website und habe folgende Konfiguration ausgewählt:
@@ -822,31 +823,29 @@ Name:
 
 Telefon:
 
-
 E-Mail:
-
 
 Beschreibe bitte kurz dein Projekt:
 
 
 Vielen Dank!
 
-Viele Grüße`
-      );
+Viele Grüße`;
 
-      const mailtoLink =
-        "mailto:info@smart-web-designs.de?subject=" + subject + "&body=" + body;
+      return "mailto:info@smart-web-designs.de?subject=" +
+        encodeURIComponent(subject) +
+        "&body=" +
+        encodeURIComponent(body);
+    }
 
-      window.location.href = mailtoLink;
-
-      setTimeout(function() {
-        if (document.hasFocus && document.hasFocus()) {
-          window.location.assign(mailtoLink);
-        }
-      }, 250);
+    function updateMailLink() {
+      if (swdSubmitMail) {
+        swdSubmitMail.setAttribute("href", buildMailtoLink());
+      }
     }
 
     updatePrice();
+    updateMailLink();
   </script>
 </body>
 </html>
