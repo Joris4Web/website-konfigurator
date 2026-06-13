@@ -547,7 +547,9 @@ body {
             <div class="swd-monthly">€35 <small>/Monat</small></div>
             <p class="swd-small">Hosting, Wartung, Updates & Basis-SEO inklusive.</p>
 
-            <a class="swd-submit" href="mailto:ytlegendary33@gmail.com?subject=Website-Konfiguration">Mit dieser Auswahl weitermachen</a>
+         <a class="swd-submit" href="#" onclick="swdSendConfigurationEmail(event)">
+  Mit dieser Auswahl weitermachen
+</a>
 
             <p class="swd-note">Noch keine Zahlung. Wir bestätigen alles, bevor wir starten.</p>
           </div>
@@ -645,6 +647,40 @@ body {
     });
 
     updatePrice();
+    <script>
+function swdSendConfigurationEmail(event) {
+  event.preventDefault();
+
+  var total = document.getElementById("totalPrice").textContent;
+  var rows = document.querySelectorAll(".swd-summary-row");
+
+  var details = "";
+
+  rows.forEach(function(row) {
+    var name = row.querySelector("span").textContent;
+    var price = row.querySelector("strong").textContent;
+    details += "- " + name + ": " + price + "%0D%0A";
+  });
+
+  var subject = encodeURIComponent("Neue Website-Konfiguration");
+
+  var body =
+    "Hallo Smart Web Designs,%0D%0A%0D%0A" +
+    "ich interessiere mich für eine Website mit folgender Konfiguration:%0D%0A%0D%0A" +
+    details +
+    "%0D%0AEinmaliger Einrichtungspreis: " + encodeURIComponent(total) + "%0D%0A" +
+    "Monatlich: €35/Monat%0D%0A%0D%0A" +
+    "Kurzbeschreibung meines Projekts:%0D%0A" +
+    "[Bitte hier kurz beschreiben, worum es bei der Website geht]%0D%0A%0D%0A" +
+    "Name:%0D%0A" +
+    "Telefon:%0D%0A" +
+    "Website/Unternehmen:%0D%0A%0D%0A" +
+    "Viele Grüße";
+
+  window.location.href =
+    "mailto:ytlegendary33@gmail.com?subject=" + subject + "&body=" + body;
+}
+
   </script>
 </body>
 </html>
