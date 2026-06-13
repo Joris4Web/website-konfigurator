@@ -650,31 +650,67 @@ body {
 function swdSendConfigurationEmail(event) {
   event.preventDefault();
 
-  var total = document.getElementById("totalPrice").textContent;
-  var rows = document.querySelectorAll(".swd-summary-row");
+  const total = document.getElementById("totalPrice").textContent;
+  const rows = document.querySelectorAll(".swd-summary-row");
 
-  var details = "";
+  let details = "";
 
   rows.forEach(function(row) {
-    var name = row.querySelector("span").textContent;
-    var price = row.querySelector("strong").textContent;
-    details += "- " + name + ": " + price + "%0D%0A";
+    const name = row.querySelector("span").textContent;
+    const price = row.querySelector("strong").textContent;
+
+    details += "• " + name + " (" + price + ")\n";
   });
 
-  var subject = encodeURIComponent("Neue Website-Konfiguration");
+  const subject = encodeURIComponent("Neue Website-Anfrage");
 
-  var body =
-    "Hallo Smart Web Designs,%0D%0A%0D%0A" +
-    "ich interessiere mich für eine Website mit folgender Konfiguration:%0D%0A%0D%0A" +
-    details +
-    "%0D%0AEinmaliger Einrichtungspreis: " + encodeURIComponent(total) + "%0D%0A" +
-    "Monatlich: €35/Monat%0D%0A%0D%0A" +
-    "Kurzbeschreibung meines Projekts:%0D%0A" +
-    "[Bitte hier kurz beschreiben, worum es bei der Website geht]%0D%0A%0D%0A" +
-    "Name:%0D%0A" +
-    "Telefon:%0D%0A" +
-    "Website/Unternehmen:%0D%0A%0D%0A" +
-    "Viele Grüße";
+  const body = encodeURIComponent(
+
+`Hallo Smart Web Designs,
+
+ich interessiere mich für eine Website und habe folgende Konfiguration ausgewählt:
+
+────────────────────
+AUSGEWÄHLTE LEISTUNGEN
+────────────────────
+
+${details}
+
+Einmalige Einrichtung:
+${total}
+
+Monatliche Betreuung:
+€35 / Monat
+
+────────────────────
+PROJEKTINFORMATIONEN
+────────────────────
+
+Unternehmen:
+____________________
+
+Name:
+____________________
+
+Telefon:
+____________________
+
+E-Mail:
+____________________
+
+Beschreibe bitte kurz dein Projekt:
+
+________________________________________________
+
+________________________________________________
+
+________________________________________________
+
+
+Vielen Dank!
+
+Viele Grüße`
+  );
 
   window.location.href =
     "mailto:ytlegendary33@gmail.com?subject=" + subject + "&body=" + body;
