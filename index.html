@@ -4,12 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Smart Web Designs Konfigurator</title>
-<section id="konfigurator">
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
     * {
       box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     html,
@@ -19,18 +23,15 @@
       background: #ffffff;
       font-family: 'Manrope', Arial, sans-serif;
       color: #111111;
-    }
-
-    body {
       overflow-x: hidden;
     }
 
-.swd-config-full {
-  width: 100%;
-  padding: 76px 22px 0;
-  margin-bottom: 0 !important;
-  background: #ffffff;
-}
+    .swd-config-full {
+      width: 100%;
+      padding: 76px 22px 0;
+      margin: 0 !important;
+      background: #ffffff;
+    }
 
     .swd-config-wrap {
       max-width: 1080px;
@@ -55,6 +56,7 @@
       line-height: 1.08;
       letter-spacing: -2px;
       font-weight: 800;
+      color: #111111;
     }
 
     .swd-config-head p {
@@ -92,6 +94,7 @@
       margin: 0 0 16px;
       font-size: 17px;
       font-weight: 800;
+      color: #111111;
     }
 
     .swd-box-sub {
@@ -118,7 +121,7 @@
       background: #ffffff;
       text-align: left;
       cursor: pointer;
-      transition: .24s ease;
+      transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease, background .24s ease;
       font-family: inherit;
       color: inherit;
     }
@@ -139,6 +142,7 @@
       margin-bottom: 6px;
       font-size: 14px;
       font-weight: 800;
+      color: #111111;
     }
 
     .swd-option p {
@@ -202,6 +206,7 @@
       display: block;
       font-size: 14px;
       font-weight: 800;
+      color: #111111;
     }
 
     .swd-pages-control p {
@@ -211,13 +216,16 @@
       font-weight: 500;
     }
 
-    .swd-counter {
+    .swd-counter,
+    .swd-email-counter {
       display: flex;
       align-items: center;
       gap: 16px;
+      flex-shrink: 0;
     }
 
-    .swd-counter button {
+    .swd-counter button,
+    .swd-email-counter button {
       width: 34px;
       height: 34px;
       border-radius: 999px;
@@ -227,17 +235,72 @@
       font-size: 19px;
       cursor: pointer;
       transition: .24s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: inherit;
     }
 
-    .swd-counter button:hover {
+    .swd-counter button:hover,
+    .swd-email-counter button:hover {
       border-color: #2588f8;
       color: #2588f8;
     }
 
-    .swd-counter span {
+    .swd-counter span,
+    .swd-email-counter span {
       min-width: 18px;
       text-align: center;
       font-weight: 800;
+      color: #111111;
+    }
+
+    .swd-email-box {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px 16px;
+      border: 1px solid #d8e2ec;
+      border-radius: 16px;
+      background: #ffffff;
+      transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease, background .24s ease;
+    }
+
+    .swd-email-box.active {
+      border-color: #2588f8;
+      background: #eef7ff;
+    }
+
+    .swd-email-box:hover {
+      transform: translateY(-1px);
+      border-color: #b9d8fb;
+      box-shadow: 0 10px 22px rgba(0,0,0,.06);
+    }
+
+    .swd-email-box strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 800;
+      color: #111111;
+    }
+
+    .swd-email-box p {
+      margin: 0;
+      color: #465774;
+      font-size: 12.5px;
+      line-height: 1.45;
+      font-weight: 500;
+    }
+
+    .swd-email-box small {
+      display: block;
+      margin-top: 8px;
+      color: #006cff;
+      font-size: 12.5px;
+      font-weight: 700;
     }
 
     .swd-summary {
@@ -252,6 +315,7 @@
       border-bottom: 1px solid #dbe4ee;
       font-size: 14px;
       font-weight: 800;
+      color: #111111;
     }
 
     .swd-summary-body {
@@ -299,9 +363,11 @@
       line-height: 1;
       font-weight: 800;
       letter-spacing: -2px;
+      color: #111111;
     }
 
-    .swd-summary-list {
+    .swd-summary-list,
+    .swd-monthly-list {
       display: grid;
       gap: 10px;
     }
@@ -318,6 +384,7 @@
     .swd-summary-row strong {
       color: #111111;
       font-weight: 700;
+      white-space: nowrap;
     }
 
     .swd-line {
@@ -331,6 +398,7 @@
       font-size: 24px;
       font-weight: 800;
       letter-spacing: -1px;
+      color: #111111;
     }
 
     .swd-monthly small {
@@ -340,7 +408,7 @@
     }
 
     .swd-small {
-      margin: 0 0 20px;
+      margin: 0 0 16px;
       color: #465774;
       font-size: 12.5px;
       line-height: 1.5;
@@ -359,6 +427,9 @@
       font-size: 14px;
       font-weight: 800;
       transition: .24s ease;
+      text-align: center;
+      margin-top: 20px;
+      padding: 0 18px;
     }
 
     .swd-submit:hover {
@@ -389,7 +460,7 @@
 
     @media (max-width: 620px) {
       .swd-config-full {
-        padding: 58px 16px 62px;
+        padding: 58px 16px 0;
       }
 
       .swd-type-grid,
@@ -401,35 +472,23 @@
         padding: 20px;
       }
 
-      .swd-pages-control {
+      .swd-pages-control,
+      .swd-email-box {
         align-items: flex-start;
         flex-direction: column;
       }
 
-      .swd-counter {
+      .swd-counter,
+      .swd-email-counter {
         width: 100%;
         justify-content: space-between;
       }
     }
-
-    html,
-body {
-  margin: 0;
-  padding: 0;
-}
-
-.swd-config-full,
-.swd-config-wrap,
-.swd-config-layout,
-.swd-config-left {
-  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
   </style>
 </head>
 
 <body>
-  <section class="swd-config-full">
+  <section id="konfigurator" class="swd-config-full">
     <div class="swd-config-wrap">
       <div class="swd-config-head">
         <span>KONFIGURATOR</span>
@@ -523,6 +582,20 @@ body {
                 <span>+€150</span>
                 <i>✓</i>
               </button>
+
+              <div class="swd-email-box" id="emailBox">
+                <div>
+                  <strong>E-Mail-Adressen</strong>
+                  <p>Professionelle Postfächer für deine Domain.</p>
+                  <small>+€2 / Monat pro E-Mail-Adresse</small>
+                </div>
+
+                <div class="swd-email-counter">
+                  <button type="button" id="minusEmail">−</button>
+                  <span id="emailCount">0</span>
+                  <button type="button" id="plusEmail">+</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -541,15 +614,16 @@ body {
             <div class="swd-line"></div>
 
             <div class="swd-summary-label green">
-              <span>↻</span> MONATLICH · IMMER €35
+              <span>↻</span> MONATLICH
             </div>
 
-            <div class="swd-monthly">€35 <small>/Monat</small></div>
+            <div class="swd-monthly" id="monthlyPrice">€35 <small>/Monat</small></div>
             <p class="swd-small">Hosting, Wartung, Updates & Basis-SEO inklusive.</p>
+            <div class="swd-monthly-list" id="monthlyList"></div>
 
-         <a class="swd-submit" href="#" onclick="swdSendConfigurationEmail(event)">
-  Mit dieser Auswahl weitermachen
-</a>
+            <a class="swd-submit" href="#" onclick="swdSendConfigurationEmail(event)">
+              Mit dieser Auswahl weitermachen
+            </a>
 
             <p class="swd-note">Noch keine Zahlung. Wir bestätigen alles, bevor wir starten.</p>
           </div>
@@ -565,12 +639,21 @@ body {
     const pageCount = document.getElementById("pageCount");
     const minusPage = document.getElementById("minusPage");
     const plusPage = document.getElementById("plusPage");
+
+    const minusEmail = document.getElementById("minusEmail");
+    const plusEmail = document.getElementById("plusEmail");
+    const emailCount = document.getElementById("emailCount");
+    const emailBox = document.getElementById("emailBox");
+
     const totalPrice = document.getElementById("totalPrice");
+    const monthlyPrice = document.getElementById("monthlyPrice");
     const summaryList = document.getElementById("summaryList");
+    const monthlyList = document.getElementById("monthlyList");
     const addons = document.querySelectorAll(".swd-addon");
 
     let selectedType = "onepage";
     let pages = 3;
+    let emails = 0;
 
     function euro(value) {
       return "€" + Number(value).toLocaleString("de-DE");
@@ -578,16 +661,18 @@ body {
 
     function updatePrice() {
       let total = 0;
-      let rows = "";
+      let setupRows = "";
+      let monthlyRows = "";
+      let monthlyTotal = 35;
 
       if (selectedType === "onepage") {
         total += 300;
-        rows += `<div class="swd-summary-row"><span>One-Page-Website</span><strong>€300</strong></div>`;
+        setupRows += `<div class="swd-summary-row"><span>One-Page-Website</span><strong>€300</strong></div>`;
       } else {
         const extraPages = Math.max(0, pages - 3);
         const pagePrice = 450 + extraPages * 80;
         total += pagePrice;
-        rows += `<div class="swd-summary-row"><span>Multi-Page (${pages} Seiten)</span><strong>${euro(pagePrice)}</strong></div>`;
+        setupRows += `<div class="swd-summary-row"><span>Multi-Page (${pages} Seiten)</span><strong>${euro(pagePrice)}</strong></div>`;
       }
 
       addons.forEach(addon => {
@@ -595,33 +680,40 @@ body {
           const name = addon.dataset.name;
           const price = Number(addon.dataset.price);
           total += price;
-          rows += `<div class="swd-summary-row"><span>${name}</span><strong>+${euro(price)}</strong></div>`;
+          setupRows += `<div class="swd-summary-row"><span>${name}</span><strong>+${euro(price)}</strong></div>`;
         }
       });
 
+      if (emails > 0) {
+        const emailMonthly = emails * 2;
+        monthlyTotal += emailMonthly;
+        monthlyRows += `<div class="swd-summary-row"><span>${emails} E-Mail-Adresse${emails > 1 ? "n" : ""}</span><strong>+${euro(emailMonthly)}/Monat</strong></div>`;
+        emailBox.classList.add("active");
+      } else {
+        emailBox.classList.remove("active");
+      }
+
       totalPrice.textContent = euro(total);
-      summaryList.innerHTML = rows;
+      monthlyPrice.innerHTML = euro(monthlyTotal) + ' <small>/Monat</small>';
+      summaryList.innerHTML = setupRows;
+      monthlyList.innerHTML = monthlyRows;
     }
 
     typeOne.addEventListener("click", () => {
       selectedType = "onepage";
       pages = 3;
       pageCount.textContent = pages;
-
       typeOne.classList.add("active");
       typeMulti.classList.remove("active");
       pagesControl.classList.remove("show");
-
       updatePrice();
     });
 
     typeMulti.addEventListener("click", () => {
       selectedType = "multipage";
-
       typeMulti.classList.add("active");
       typeOne.classList.remove("active");
       pagesControl.classList.add("show");
-
       updatePrice();
     });
 
@@ -639,6 +731,20 @@ body {
       }
     });
 
+    plusEmail.addEventListener("click", () => {
+      emails++;
+      emailCount.textContent = emails;
+      updatePrice();
+    });
+
+    minusEmail.addEventListener("click", () => {
+      if (emails > 0) {
+        emails--;
+        emailCount.textContent = emails;
+        updatePrice();
+      }
+    });
+
     addons.forEach(addon => {
       addon.addEventListener("click", () => {
         addon.classList.toggle("active");
@@ -646,41 +752,59 @@ body {
       });
     });
 
-    updatePrice();
-function swdSendConfigurationEmail(event) {
-  event.preventDefault();
+    function swdSendConfigurationEmail(event) {
+      event.preventDefault();
 
-  const total = document.getElementById("totalPrice").textContent;
-  const rows = document.querySelectorAll(".swd-summary-row");
+      const setupTotal = totalPrice.textContent;
+      const monthlyTotal = monthlyPrice.textContent.replace(/\s+/g, " ").trim();
+      const setupRows = document.querySelectorAll("#summaryList .swd-summary-row");
+      const monthlyRows = document.querySelectorAll("#monthlyList .swd-summary-row");
 
-  let details = "";
+      let setupDetails = "";
+      let monthlyDetails = "";
 
-  rows.forEach(function(row) {
-    const name = row.querySelector("span").textContent;
-    const price = row.querySelector("strong").textContent;
+      setupRows.forEach(function(row) {
+        const name = row.querySelector("span").textContent;
+        const price = row.querySelector("strong").textContent;
+        setupDetails += "• " + name + " (" + price + ")\n";
+      });
 
-    details += "• " + name + " (" + price + ")\n";
-  });
+      monthlyRows.forEach(function(row) {
+        const name = row.querySelector("span").textContent;
+        const price = row.querySelector("strong").textContent;
+        monthlyDetails += "• " + name + " (" + price + ")\n";
+      });
 
-  const subject = encodeURIComponent("Neue Website-Anfrage");
+      if (!monthlyDetails) {
+        monthlyDetails = "• Keine zusätzlichen monatlichen Extras\n";
+      }
 
-  const body = encodeURIComponent(
+      const subject = encodeURIComponent("Neue Website-Anfrage über den Konfigurator");
 
+      const body = encodeURIComponent(
 `Hallo Smart Web Designs,
 
 ich interessiere mich für eine Website und habe folgende Konfiguration ausgewählt:
 
 ────────────────────
-AUSGEWÄHLTE LEISTUNGEN
+EINMALIGE EINRICHTUNG
 ────────────────────
 
-${details}
+${setupDetails}
+Einmaliger Einrichtungspreis:
+${setupTotal}
 
-Einmalige Einrichtung:
-${total}
+────────────────────
+MONATLICHE BETREUUNG
+────────────────────
 
-Monatliche Betreuung:
+Grundpreis:
 €35 / Monat
+
+Zusätzliche monatliche Extras:
+${monthlyDetails}
+Monatlicher Gesamtpreis:
+${monthlyTotal}
 
 ────────────────────
 PROJEKTINFORMATIONEN
@@ -688,9 +812,7 @@ PROJEKTINFORMATIONEN
 
 Unternehmen:
 
-
 Name:
-
 
 Telefon:
 
@@ -701,17 +823,16 @@ E-Mail:
 Beschreibe bitte kurz dein Projekt:
 
 
-
-
 Vielen Dank!
 
 Viele Grüße`
-  );
+      );
 
-  window.location.href =
-    "mailto:info@smart-web-designs.de?subject=" + subject + "&body=" + body;
-}
+      window.location.href =
+        "mailto:info@smart-web-designs.de?subject=" + subject + "&body=" + body;
+    }
 
+    updatePrice();
   </script>
 </body>
 </html>
