@@ -1,15 +1,635 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
-    <title>Smart Web Designs</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Web Designs Konfigurator</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      font-family: 'Manrope', Arial, sans-serif;
+      color: #111111;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    .swd-config-full {
+      width: 100%;
+      padding: 76px 22px 82px;
+      background: #ffffff;
+    }
+
+    .swd-config-wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .swd-config-head {
+      text-align: center;
+      margin-bottom: 46px;
+    }
+
+    .swd-config-head span {
+      color: #2588f8;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .12em;
+    }
+
+    .swd-config-head h2 {
+      margin: 10px 0;
+      font-size: clamp(34px, 4vw, 44px);
+      line-height: 1.08;
+      letter-spacing: -2px;
+      font-weight: 800;
+    }
+
+    .swd-config-head p {
+      margin: 0;
+      color: #465774;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .swd-config-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 26px;
+      align-items: start;
+    }
+
+    .swd-config-left {
+      display: grid;
+      gap: 24px;
+    }
+
+    .swd-config-box,
+    .swd-summary {
+      background: #ffffff;
+      border: 1px solid #dbe4ee;
+      border-radius: 22px;
+      box-shadow: 0 14px 32px rgba(0,0,0,.055);
+    }
+
+    .swd-config-box {
+      padding: 26px;
+    }
+
+    .swd-config-box h3 {
+      margin: 0 0 16px;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .swd-box-sub {
+      margin: -8px 0 18px;
+      color: #465774;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .swd-type-grid,
+    .swd-addon-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .swd-option {
+      position: relative;
+      width: 100%;
+      min-height: 88px;
+      padding: 18px 16px 34px;
+      border: 1px solid #d8e2ec;
+      border-radius: 16px;
+      background: #ffffff;
+      text-align: left;
+      cursor: pointer;
+      transition: .24s ease;
+      font-family: inherit;
+      color: inherit;
+    }
+
+    .swd-option:hover {
+      transform: translateY(-1px);
+      border-color: #b9d8fb;
+      box-shadow: 0 10px 22px rgba(0,0,0,.06);
+    }
+
+    .swd-option.active {
+      border-color: #2588f8;
+      background: #eef7ff;
+    }
+
+    .swd-option strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .swd-option p {
+      margin: 0;
+      max-width: 88%;
+      color: #465774;
+      font-size: 12.5px;
+      line-height: 1.45;
+      font-weight: 500;
+    }
+
+    .swd-option > span {
+      position: absolute;
+      right: 16px;
+      top: 18px;
+      color: #006cff;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .swd-addon i {
+      position: absolute;
+      left: 16px;
+      bottom: 15px;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid #d8e2ec;
+      color: transparent;
+      font-style: normal;
+      font-size: 11px;
+      line-height: 17px;
+      text-align: center;
+      font-weight: 800;
+      transition: .24s ease;
+    }
+
+    .swd-addon.active i {
+      background: #2588f8;
+      border-color: #2588f8;
+      color: #ffffff;
+    }
+
+    .swd-pages-control {
+      display: none;
+      margin-top: 12px;
+      padding: 14px;
+      border: 1px solid #d8e2ec;
+      border-radius: 16px;
+      background: #f8fbfe;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .swd-pages-control.show {
+      display: flex;
+    }
+
+    .swd-pages-control strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .swd-pages-control p {
+      margin: 4px 0 0;
+      color: #465774;
+      font-size: 12.5px;
+      font-weight: 500;
+    }
+
+    .swd-counter {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .swd-counter button {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid #d8e2ec;
+      background: #ffffff;
+      color: #111111;
+      font-size: 19px;
+      cursor: pointer;
+      transition: .24s ease;
+    }
+
+    .swd-counter button:hover {
+      border-color: #2588f8;
+      color: #2588f8;
+    }
+
+    .swd-counter span {
+      min-width: 18px;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .swd-summary {
+      position: sticky;
+      top: 24px;
+      overflow: hidden;
+    }
+
+    .swd-summary-title {
+      padding: 20px 22px;
+      background: #f4f7fa;
+      border-bottom: 1px solid #dbe4ee;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .swd-summary-body {
+      padding: 24px 22px;
+    }
+
+    .swd-summary-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+
+    .swd-summary-label span {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .swd-summary-label.blue {
+      color: #2588f8;
+    }
+
+    .swd-summary-label.blue span {
+      background: #e4f1ff;
+    }
+
+    .swd-summary-label.green {
+      color: #00895f;
+    }
+
+    .swd-summary-label.green span {
+      background: #d7f8e9;
+    }
+
+    .swd-total {
+      margin-bottom: 18px;
+      font-size: 38px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -2px;
+    }
+
+    .swd-summary-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .swd-summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      color: #465774;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .swd-summary-row strong {
+      color: #111111;
+      font-weight: 700;
+    }
+
+    .swd-line {
+      height: 1px;
+      background: #dbe4ee;
+      margin: 22px 0;
+    }
+
+    .swd-monthly {
+      margin-bottom: 7px;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .swd-monthly small {
+      color: #465774;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .swd-small {
+      margin: 0 0 20px;
+      color: #465774;
+      font-size: 12.5px;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .swd-submit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      border-radius: 999px;
+      background: #071832;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 800;
+      transition: .24s ease;
+    }
+
+    .swd-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(0,0,0,.13);
+    }
+
+    .swd-note {
+      margin: 14px 0 0;
+      text-align: center;
+      color: #6b7890;
+      font-size: 11.5px;
+      font-weight: 500;
+    }
+
+    @media (max-width: 960px) {
+      .swd-config-layout {
+        grid-template-columns: 1fr;
+        max-width: 680px;
+        margin: 0 auto;
+      }
+
+      .swd-summary {
+        position: relative;
+        top: 0;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .swd-config-full {
+        padding: 58px 16px 62px;
+      }
+
+      .swd-type-grid,
+      .swd-addon-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .swd-config-box {
+        padding: 20px;
+      }
+
+      .swd-pages-control {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .swd-counter {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <section class="swd-config-full">
+    <div class="swd-config-wrap">
+      <div class="swd-config-head">
+        <span>KONFIGURATOR</span>
+        <h2>Baue deine Website</h2>
+        <p>Wähle deine Funktionen. Dein einmaliger Preis aktualisiert sich live.</p>
+      </div>
 
-<h1>Smart Web Designs</h1>
+      <div class="swd-config-layout">
+        <div class="swd-config-left">
+          <div class="swd-config-box">
+            <h3>1. Website-Typ</h3>
 
-<button onclick="alert('Funktioniert!')">
-Testbutton
-</button>
+            <div class="swd-type-grid">
+              <button type="button" class="swd-option swd-type active" id="typeOne">
+                <strong>One-Page-Website</strong>
+                <p>Eine einzelne, scrollbare Seite. Perfekt für kleine Unternehmen.</p>
+                <span>€300</span>
+              </button>
 
+              <button type="button" class="swd-option swd-type" id="typeMulti">
+                <strong>Multi-Page-Website</strong>
+                <p>Mehrere Seiten — Home, Über uns, Leistungen etc.</p>
+                <span>ab €450</span>
+              </button>
+            </div>
+
+            <div class="swd-pages-control" id="pagesControl">
+              <div>
+                <strong>Anzahl Seiten</strong>
+                <p>3 Seiten inklusive. €80 pro weiterer Seite.</p>
+              </div>
+
+              <div class="swd-counter">
+                <button type="button" id="minusPage">−</button>
+                <span id="pageCount">3</span>
+                <button type="button" id="plusPage">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="swd-config-box">
+            <h3>2. Add-ons</h3>
+            <p class="swd-box-sub">Optionale Funktionen. Du kannst sie jederzeit auswählen oder entfernen.</p>
+
+            <div class="swd-addon-grid">
+              <button type="button" class="swd-option swd-addon active" data-name="Kontaktformular" data-price="40">
+                <strong>Kontaktformular</strong>
+                <p>Formular mit E-Mail-Benachrichtigung & Spam-Schutz.</p>
+                <span>+€40</span>
+                <i>✓</i>
+              </button>
+
+              <button type="button" class="swd-option swd-addon" data-name="Blog-System" data-price="120">
+                <strong>Blog-System</strong>
+                <p>Beiträge veröffentlichen mit Kategorien & SEO.</p>
+                <span>+€120</span>
+                <i>✓</i>
+              </button>
+
+              <button type="button" class="swd-option swd-addon" data-name="Terminbuchung" data-price="180">
+                <strong>Terminbuchung</strong>
+                <p>Kunden können Termine direkt online buchen.</p>
+                <span>+€180</span>
+                <i>✓</i>
+              </button>
+
+              <button type="button" class="swd-option swd-addon" data-name="Online-Shop / E-Commerce" data-price="450">
+                <strong>Online-Shop / E-Commerce</strong>
+                <p>Produkte verkaufen mit sicherem Checkout.</p>
+                <span>+€450</span>
+                <i>✓</i>
+              </button>
+
+              <button type="button" class="swd-option swd-addon" data-name="Analytics & Tracking" data-price="50">
+                <strong>Analytics & Tracking</strong>
+                <p>Besucher, Quellen und Conversions messen.</p>
+                <span>+€50</span>
+                <i>✓</i>
+              </button>
+
+              <button type="button" class="swd-option swd-addon" data-name="Social-Media-Integration" data-price="40">
+                <strong>Social-Media-Integration</strong>
+                <p>Instagram, Facebook & weitere Kanäle verbinden.</p>
+                <span>+€40</span>
+                <i>✓</i>
+              </button>
+
+              <button type="button" class="swd-option swd-addon" data-name="Mehrsprachigkeit" data-price="150">
+                <strong>Mehrsprachigkeit</strong>
+                <p>Pro zusätzlicher Sprache.</p>
+                <span>+€150</span>
+                <i>✓</i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="swd-summary">
+          <div class="swd-summary-title">Deine Konfiguration</div>
+
+          <div class="swd-summary-body">
+            <div class="swd-summary-label blue">
+              <span>▣</span> EINMALIGE EINRICHTUNG
+            </div>
+
+            <div class="swd-total" id="totalPrice">€340</div>
+            <div class="swd-summary-list" id="summaryList"></div>
+
+            <div class="swd-line"></div>
+
+            <div class="swd-summary-label green">
+              <span>↻</span> MONATLICH · IMMER €29
+            </div>
+
+            <div class="swd-monthly">€29 <small>/Monat</small></div>
+            <p class="swd-small">Hosting, Wartung, Updates & Basis-SEO inklusive.</p>
+
+            <a class="swd-submit" href="mailto:ytlegendary33@gmail.com?subject=Website-Konfiguration">Mit dieser Auswahl weitermachen</a>
+
+            <p class="swd-note">Noch keine Zahlung. Wir bestätigen alles, bevor wir starten.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const typeOne = document.getElementById("typeOne");
+    const typeMulti = document.getElementById("typeMulti");
+    const pagesControl = document.getElementById("pagesControl");
+    const pageCount = document.getElementById("pageCount");
+    const minusPage = document.getElementById("minusPage");
+    const plusPage = document.getElementById("plusPage");
+    const totalPrice = document.getElementById("totalPrice");
+    const summaryList = document.getElementById("summaryList");
+    const addons = document.querySelectorAll(".swd-addon");
+
+    let selectedType = "onepage";
+    let pages = 3;
+
+    function euro(value) {
+      return "€" + Number(value).toLocaleString("de-DE");
+    }
+
+    function updatePrice() {
+      let total = 0;
+      let rows = "";
+
+      if (selectedType === "onepage") {
+        total += 300;
+        rows += `<div class="swd-summary-row"><span>One-Page-Website</span><strong>€300</strong></div>`;
+      } else {
+        const extraPages = Math.max(0, pages - 3);
+        const pagePrice = 450 + extraPages * 80;
+        total += pagePrice;
+        rows += `<div class="swd-summary-row"><span>Multi-Page (${pages} Seiten)</span><strong>${euro(pagePrice)}</strong></div>`;
+      }
+
+      addons.forEach(addon => {
+        if (addon.classList.contains("active")) {
+          const name = addon.dataset.name;
+          const price = Number(addon.dataset.price);
+          total += price;
+          rows += `<div class="swd-summary-row"><span>${name}</span><strong>+${euro(price)}</strong></div>`;
+        }
+      });
+
+      totalPrice.textContent = euro(total);
+      summaryList.innerHTML = rows;
+    }
+
+    typeOne.addEventListener("click", () => {
+      selectedType = "onepage";
+      pages = 3;
+      pageCount.textContent = pages;
+
+      typeOne.classList.add("active");
+      typeMulti.classList.remove("active");
+      pagesControl.classList.remove("show");
+
+      updatePrice();
+    });
+
+    typeMulti.addEventListener("click", () => {
+      selectedType = "multipage";
+
+      typeMulti.classList.add("active");
+      typeOne.classList.remove("active");
+      pagesControl.classList.add("show");
+
+      updatePrice();
+    });
+
+    plusPage.addEventListener("click", () => {
+      pages++;
+      pageCount.textContent = pages;
+      updatePrice();
+    });
+
+    minusPage.addEventListener("click", () => {
+      if (pages > 3) {
+        pages--;
+        pageCount.textContent = pages;
+        updatePrice();
+      }
+    });
+
+    addons.forEach(addon => {
+      addon.addEventListener("click", () => {
+        addon.classList.toggle("active");
+        updatePrice();
+      });
+    });
+
+    updatePrice();
+  </script>
 </body>
 </html>
